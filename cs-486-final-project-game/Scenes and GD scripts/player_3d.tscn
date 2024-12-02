@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://bfklqcvxptp26"]
+
+[ext_resource type="Script" path="res://Scenes and GD scripts/player_3d.gd" id="1_rexxc"]
+[ext_resource type="Shader" path="res://Shader files/player_3d.gdshader" id="2_mj1x0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_disce"]
+render_priority = 0
+shader = ExtResource("2_mj1x0")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_bwyx5"]
+material = SubResource("ShaderMaterial_disce")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lemc3"]
+render_priority = 0
+shader = ExtResource("2_mj1x0")
+
+[sub_resource type="BoxMesh" id="BoxMesh_b2764"]
+material = SubResource("ShaderMaterial_lemc3")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vhki7"]
+
+[node name="Player3D" type="CharacterBody3D"]
+script = ExtResource("1_rexxc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_bwyx5")
+
+[node name="CameraNode" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="Camera3D" type="Camera3D" parent="CameraNode"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 3.90042, 6.06557)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.8, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.496454, -0.309889)
+mesh = SubResource("BoxMesh_b2764")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_vhki7")

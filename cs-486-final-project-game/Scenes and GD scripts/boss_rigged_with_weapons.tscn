@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://cx5c7fx4uyrk5"]
+
+[ext_resource type="PackedScene" uid="uid://b3612fepad0lp" path="res://GLB files/bossRiggedWithWeapons.glb" id="1_hwo4i"]
+[ext_resource type="PackedScene" uid="uid://bykj3p4u0n7kb" path="res://GLB files/axe.glb" id="2_w5wbe"]
+[ext_resource type="PackedScene" uid="uid://c4ror7rcu6vyq" path="res://GLB files/glasses.glb" id="3_665yi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8e80v"]
+albedo_color = Color(0.400698, 0.400698, 0.400698, 1)
+roughness = 0.5
+
+[node name="bossRiggedWithWeapons" instance=ExtResource("1_hwo4i")]
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/2/rotation = Quaternion(-0.0385075, -0.0342144, 0.669368, 0.741143)
+bones/3/rotation = Quaternion(-0.783941, 0.0031899, 0.0186584, 0.620547)
+bones/6/rotation = Quaternion(-0.0385075, 0.0342144, -0.669368, 0.741143)
+bones/7/rotation = Quaternion(-0.783941, -0.0031899, -0.0186584, 0.620547)
+bones/8/rotation = Quaternion(0.131694, -0.688741, -0.103246, 0.705431)
+bones/10/position = Vector3(-1.99886, -0.00206626, -2.52099)
+bones/11/position = Vector3(1.99886, -0.00206626, -2.52099)
+
+[node name="Icosphere" parent="Armature/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_8e80v")
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="1"]
+transform = Transform3D(0.291499, 2.5332e-07, 0.956571, -0.956571, -2.98023e-08, 0.291499, 1.49012e-07, -1, 2.52388e-07, 1.99886, -0.00206888, -2.52099)
+bone_name = "Bone_R.Hand"
+bone_idx = 8
+
+[node name="axe" parent="Armature/Skeleton3D/BoneAttachment3D" index="0" instance=ExtResource("2_w5wbe")]
+transform = Transform3D(-1.2707e-08, -0.290702, -0.956814, 1, -4.37114e-08, 8.52651e-14, -4.18239e-08, -0.956814, 0.290702, -0.635677, -0.00797987, -2.07893)
+
+[node name="BoneAttachment3D2" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+bone_name = "Bone"
+bone_idx = 0
+
+[node name="glasses" parent="Armature/Skeleton3D/BoneAttachment3D2" index="0" instance=ExtResource("3_665yi")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.05964, -1.89335)
+
+[editable path="Armature/Skeleton3D/BoneAttachment3D/axe"]
+[editable path="Armature/Skeleton3D/BoneAttachment3D2/glasses"]
