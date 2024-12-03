@@ -22,9 +22,15 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if (axeEntered == true):
 		if (axeDamaged == false): #state machines set to false right bfore damage can be dealt
-			php -= boss.Damage
+			if (player.Blocking):
+				php -= boss.Damage / 2
+			else:
+				php -= boss.Damage
 			if php > 0:
-				playerHealth.value -= boss.Damage
+				if (player.Blocking):
+					playerHealth.value -= boss.Damage / 2
+				else:
+					playerHealth.value -= boss.Damage
 			else:
 				get_tree().change_scene_to_file("res://Scenes and GD scripts/you_died.tscn")
 			axeDamaged = true
