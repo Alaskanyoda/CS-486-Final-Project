@@ -3,6 +3,7 @@ extends CharacterBody3D
 enum playerStates {
 	IDLE,
 	HEAVYATT,
+	HEAVYATT_2,
 	ATT_0_1,
 	ATT_1_END,
 	ATT_1_2,
@@ -44,7 +45,7 @@ func _process(delta: float) -> void:
 			if(Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and not(PlayerAP.is_playing())):
 				if(Input.is_key_pressed(KEY_SHIFT)):
 					state = playerStates.HEAVYATT
-					Damage = 20
+					Damage = 0
 					rootNode.spear_damage_set(false)
 					PlayerAP.queue("heavyattack")
 				else:
@@ -107,14 +108,16 @@ func _process(delta: float) -> void:
 		playerStates.DEAD:
 			pass
 		playerStates.HEAVYATT:
+			if (PlayerAP.current_animation_position >= 2.6):
+				Damage = 20
+				rootNode.spear_damage_set(false)
+				state = playerStates.HEAVYATT_2
+		playerStates.HEAVYATT_2:
 			if(not(PlayerAP.is_playing())):
 				state = playerStates.IDLE
-			if (PlayerAP.current_animation_position <= 2.6):
-				rootNode.spear_damage_set(false)
-			if (PlayerAP.current_animation_position >= 2.6 and PlayerAP.current_animation_position < 3.6):
-				Damage = 20
-			else:
+			if (PlayerAP.current_animation_position > 3.6):
 				Damage = 0
+				rootNode.spear_damage_set(true)
 
 
 func _physics_process(delta: float) -> void:
@@ -145,7 +148,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
-
+		
 	move_and_slide()
 
 func _input(event: InputEvent) -> void:

@@ -10,7 +10,7 @@
 albedo_color = Color(0.427493, 0.427493, 0.427493, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_24lrk"]
-size = Vector3(0.78952, 2.00979, 0.520064)
+size = Vector3(0.78952, 2.87159, 0.520064)
 
 [node name="playerRiggedWithWeapons" instance=ExtResource("1_cf53c")]
 script = ExtResource("2_py4g3")
@@ -28,7 +28,7 @@ bones/11/position = Vector3(1.99886, -0.00206626, -2.52099)
 surface_material_override/0 = SubResource("StandardMaterial3D_lsclu")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="1"]
-transform = Transform3D(-0.954483, -3.72529e-08, 0.298266, -0.298266, 1.78814e-07, -0.954483, -4.88944e-08, -1, -1.78814e-07, 1.99886, -0.00206596, -2.52099)
+transform = Transform3D(-0.954483, 2.08616e-07, 0.298265, -0.298265, -4.17233e-07, -0.954483, -8.6613e-08, -1, 4.47035e-07, 1.99886, -0.00206888, -2.52099)
 bone_name = "Bone_R.003"
 bone_idx = 8
 
@@ -46,7 +46,7 @@ collision_layer = 2
 collision_mask = 2
 
 [node name="SpearCollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/BoneAttachment3D/spear/SpearArea3D" index="0"]
-transform = Transform3D(1, -2.80664e-13, -2.80664e-13, 0, 1, -8.72355e-12, 2.19416e-11, -2.2434e-12, 1, 0.00407386, 1.91892, -5.0486e-05)
+transform = Transform3D(1, -2.84217e-13, -2.84217e-13, 0, 1, -1.12984e-11, 2.71143e-11, -2.25034e-12, 1, 0.00407386, 1.48802, -5.0486e-05)
 shape = SubResource("BoxShape3D_24lrk")
 
 [connection signal="body_entered" from="Armature/Skeleton3D/BoneAttachment3D/spear/SpearArea3D" to="." method="_on_spear_area_3d_body_entered"]

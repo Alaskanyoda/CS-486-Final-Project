@@ -20,27 +20,22 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if php <= 0.5:
+		get_tree().change_scene_to_file("res://Scenes and GD scripts/you_died.tscn")
+	if bhp <= 0.5:
+		get_tree().change_scene_to_file("res://Scenes and GD scripts/you_win.tscn")
 	if (axeEntered == true):
 		if (axeDamaged == false): #state machines set to false right bfore damage can be dealt
 			if (player.Blocking):
 				php -= boss.Damage / 2
 			else:
 				php -= boss.Damage
-			if php > 0:
-				if (player.Blocking):
-					playerHealth.value -= boss.Damage / 2
-				else:
-					playerHealth.value -= boss.Damage
-			else:
-				get_tree().change_scene_to_file("res://Scenes and GD scripts/you_died.tscn")
+			playerHealth.set_health(php)
 			axeDamaged = true
 	if (spearEntered == true):
 		if (spearDamaged == false): #state machines set to false right bfore damage can be dealt
 			bhp -= player.Damage
-			if bhp > 0:
-				bossHealth.value -= player.Damage
-			else:
-				get_tree().change_scene_to_file("res://Scenes and GD scripts/you_win.tscn")
+			bossHealth.set_health(bhp)
 			spearDamaged = true
 
 func spear() -> void:
