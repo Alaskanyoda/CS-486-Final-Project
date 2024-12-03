@@ -1,14 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://ctyiouw0a6jdr"]
+[gd_scene load_steps=8 format=3 uid="uid://ctyiouw0a6jdr"]
 
 [ext_resource type="PackedScene" uid="uid://7di1j4npq0qb" path="res://GLB files/playerRiggedWithWeapons.glb" id="1_cf53c"]
 [ext_resource type="PackedScene" uid="uid://ct1tp2ln88w73" path="res://GLB files/spear.glb" id="2_ju4dk"]
+[ext_resource type="Script" path="res://Scenes and GD scripts/player_rigged_with_weapons.gd" id="2_py4g3"]
 [ext_resource type="Material" uid="uid://bd21fd7tl5ho4" path="res://Shader files/blackShiny.tres" id="3_bkbu0"]
 [ext_resource type="Material" uid="uid://cb0syh1lxqx35" path="res://Shader files/clear.tres" id="4_2ysch"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lsclu"]
 albedo_color = Color(0.427493, 0.427493, 0.427493, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_24lrk"]
+size = Vector3(0.640503, 1.73155, 0.340508)
+
 [node name="playerRiggedWithWeapons" instance=ExtResource("1_cf53c")]
+script = ExtResource("2_py4g3")
 
 [node name="Skeleton3D" parent="Armature" index="0"]
 bones/2/rotation = Quaternion(-0.0385075, -0.0342144, 0.669368, 0.741143)
@@ -23,7 +28,7 @@ bones/11/position = Vector3(1.99886, -0.00206626, -2.52099)
 surface_material_override/0 = SubResource("StandardMaterial3D_lsclu")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="1"]
-transform = Transform3D(-0.954483, 2.08616e-07, 0.298265, -0.298265, -4.17233e-07, -0.954483, -8.6613e-08, -1, 4.47035e-07, 1.99886, -0.00206888, -2.52099)
+transform = Transform3D(-0.954483, -3.72529e-08, 0.298266, -0.298266, 1.78814e-07, -0.954483, -4.88944e-08, -1, -1.78814e-07, 1.99886, -0.00206596, -2.52099)
 bone_name = "Bone_R.003"
 bone_idx = 8
 
@@ -35,5 +40,16 @@ surface_material_override/0 = ExtResource("3_bkbu0")
 
 [node name="Spearhead" parent="Armature/Skeleton3D/BoneAttachment3D/spear/Spear" index="0"]
 surface_material_override/0 = ExtResource("4_2ysch")
+
+[node name="SpearArea3D" type="Area3D" parent="Armature/Skeleton3D/BoneAttachment3D/spear" index="1"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="SpearCollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/BoneAttachment3D/spear/SpearArea3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.09573e-11, 2.19416e-11, -5.02365e-15, 1, -0.00592065, 1.95653, -0.00568772)
+shape = SubResource("BoxShape3D_24lrk")
+
+[connection signal="body_entered" from="Armature/Skeleton3D/BoneAttachment3D/spear/SpearArea3D" to="." method="_on_spear_area_3d_body_entered"]
+[connection signal="body_exited" from="Armature/Skeleton3D/BoneAttachment3D/spear/SpearArea3D" to="." method="_on_spear_area_3d_body_exited"]
 
 [editable path="Armature/Skeleton3D/BoneAttachment3D/spear"]

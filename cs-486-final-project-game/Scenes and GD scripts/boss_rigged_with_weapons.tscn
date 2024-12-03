@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://cx5c7fx4uyrk5"]
+[gd_scene load_steps=9 format=3 uid="uid://cx5c7fx4uyrk5"]
 
 [ext_resource type="PackedScene" uid="uid://b3612fepad0lp" path="res://GLB files/bossRiggedWithWeapons.glb" id="1_hwo4i"]
+[ext_resource type="Script" path="res://Scenes and GD scripts/boss_rigged_with_weapons.gd" id="2_tdwms"]
 [ext_resource type="PackedScene" uid="uid://bykj3p4u0n7kb" path="res://GLB files/axe.glb" id="2_w5wbe"]
 [ext_resource type="Material" uid="uid://bd21fd7tl5ho4" path="res://Shader files/blackShiny.tres" id="3_5w02i"]
 [ext_resource type="PackedScene" uid="uid://c4ror7rcu6vyq" path="res://GLB files/glasses.glb" id="3_665yi"]
@@ -10,7 +11,11 @@
 albedo_color = Color(0.400698, 0.400698, 0.400698, 1)
 roughness = 0.5
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_e557j"]
+size = Vector3(3.9872, 2.51947, 1.78178)
+
 [node name="bossRiggedWithWeapons" instance=ExtResource("1_hwo4i")]
+script = ExtResource("2_tdwms")
 
 [node name="Skeleton3D" parent="Armature" index="0"]
 bones/2/rotation = Quaternion(-0.0385075, -0.0342144, 0.669368, 0.741143)
@@ -38,6 +43,14 @@ surface_material_override/0 = ExtResource("3_5w02i")
 [node name="Cube_001" parent="Armature/Skeleton3D/BoneAttachment3D/axe" index="1"]
 surface_material_override/0 = ExtResource("4_pikwa")
 
+[node name="AxeArea3D" type="Area3D" parent="Armature/Skeleton3D/BoneAttachment3D/axe" index="2"]
+collision_layer = 4
+collision_mask = 4
+
+[node name="AxeCollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/BoneAttachment3D/axe/AxeArea3D" index="0"]
+transform = Transform3D(1, -4.3201e-12, -3.09797e-12, -5.74119e-12, 1, 5.87916e-09, -3.55271e-12, -5.87878e-09, 1, 0.0614223, 3.21878, 0.0275955)
+shape = SubResource("BoxShape3D_e557j")
+
 [node name="BoneAttachment3D2" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 bone_name = "Bone"
@@ -51,6 +64,9 @@ surface_material_override/0 = ExtResource("3_5w02i")
 
 [node name="Cube_003" parent="Armature/Skeleton3D/BoneAttachment3D2/glasses" index="1"]
 surface_material_override/0 = ExtResource("4_pikwa")
+
+[connection signal="body_entered" from="Armature/Skeleton3D/BoneAttachment3D/axe/AxeArea3D" to="." method="_on_axe_area_3d_body_entered"]
+[connection signal="body_exited" from="Armature/Skeleton3D/BoneAttachment3D/axe/AxeArea3D" to="." method="_on_axe_area_3d_body_exited"]
 
 [editable path="Armature/Skeleton3D/BoneAttachment3D/axe"]
 [editable path="Armature/Skeleton3D/BoneAttachment3D2/glasses"]

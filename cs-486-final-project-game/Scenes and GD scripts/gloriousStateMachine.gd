@@ -1,83 +1,57 @@
 extends Node3D
 
-#enum playerStates {
-	#IDLE,
-	#HEAVYATT,
-	#ATT_0_1,
-	#ATT_1_END,
-	#ATT_1_2,
-	#ATT_2_END,
-	#ATT_2_3_END,
-	#BLOCK_START,
-	#BLOCKING,
-	#BLOCK_END,
-	#DEAD
-#}
-#
-#@onready var player = $Player3D
-#
-#var state = playerStates.IDLE
-#@onready var PlayerAP = $Player3D/playerRiggedWithWeapons/AnimationPlayer
-#var startTime = Time.get_unix_time_from_system()
-#var timeStampBlocking = 0
-#
+@onready var playerHealth = $Healthbars/PlayerHealthBar
+@onready var bossHealth = $Healthbars/BossHealthBar
+@onready var player = $Player3D
+@onready var boss = $boss_3d
+var php = 100
+var bhp = 100
+var axeEntered = false
+var spearEntered = false
+var axeDamaged = true
+var spearDamaged = false
+
 ## Called when the node enters the scene tree for the first time.
-#func _ready() -> void:
-	#pass # Replace with function body.
-#
-#
-## Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-	#get_tree().call_group("boss", "update_target_location", player.global_transform.origin)
-	#match state:
-		#playerStates.IDLE:
-			#if(Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and not(PlayerAP.is_playing())):
-				#if(Input.is_key_pressed(KEY_SHIFT)):
-					#state = playerStates.HEAVYATT
-					#PlayerAP.queue("heavyattack")
-				#else:
-					#state = playerStates.ATT_0_1
-					#PlayerAP.queue("Swing0-1")
-			#if(Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and not(PlayerAP.is_playing())):
-				#state = playerStates.BLOCK_START
-				#PlayerAP.queue("BlockStart")
-		#playerStates.ATT_0_1:
-			#if(Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and (PlayerAP.current_animation_position > 0.3)):
-				#PlayerAP.queue("Swing1-2")
-				#state = playerStates.ATT_1_2
-			#else:
-				#if(not(PlayerAP.is_playing())):
-					#PlayerAP.queue("Swing1-end")
-					#state = playerStates.ATT_1_END
-		#playerStates.ATT_1_END:
-			#if(not(PlayerAP.is_playing())):
-				#state = playerStates.IDLE
-		#playerStates.ATT_1_2:
-			#if(Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and (PlayerAP.current_animation_position > 0.3) and (PlayerAP.current_animation == "Swing1-2")):
-				#PlayerAP.queue("Swing2-3-end")
-				#state = playerStates.ATT_2_3_END
-			#else:
-				#if(not(PlayerAP.is_playing())):
-					#PlayerAP.queue("Swing2-end")
-					#state = playerStates.ATT_1_END
-		#playerStates.ATT_2_END:
-			#if(not(PlayerAP.is_playing())):
-				#state = playerStates.IDLE
-		#playerStates.ATT_2_3_END:
-			#if(not(PlayerAP.is_playing())):
-				#state = playerStates.IDLE
-		#playerStates.BLOCK_START:
-			#timeStampBlocking = Time.get_unix_time_from_system()
-			#state = playerStates.BLOCKING
-		#playerStates.BLOCKING:
-			#if(not(Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT))):
-				#PlayerAP.queue("BlockEnd")
-				#state = playerStates.BLOCK_END
-		#playerStates.BLOCK_END:
-			#if(not(PlayerAP.is_playing())):
-				#state = playerStates.IDLE
-		#playerStates.DEAD:
-			#pass
-		#playerStates.HEAVYATT:
-			#if(not(PlayerAP.is_playing())):
-				#state = playerStates.IDLE
+func _ready() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	playerHealth.init_health(100)
+	bossHealth.init_health(100)
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	if (axeEntered == true):
+		if (axeDamaged == false): #state machines set to false right bfore damage can be dealt
+			php -= boss.Damage
+			if php > 0:
+				playerHealth.value -= boss.Damage
+			else:
+				get_tree().change_scene_to_file("res://Scenes and GD scripts/you_died.tscn")
+			axeDamaged = true
+	if (spearEntered == true):
+		if (spearDamaged == false): #state machines set to false right bfore damage can be dealt
+			bhp -= player.Damage
+			if bhp > 0:
+				bossHealth.value -= player.Damage
+			else:
+				get_tree().change_scene_to_file("res://Scenes and GD scripts/you_win.tscn")
+			spearDamaged = true
+
+func spear() -> void:
+	spearEntered = true
+	
+func spear_leave() -> void:
+	spearEntered = false
+	
+func axe() -> void:
+	axeEntered = true
+
+func axe_leave() -> void:
+	axeEntered = false
+	
+func axe_damage_set(axedmg) -> void:
+	axeDamaged = axedmg
+	
+func spear_damage_set(speardmg) -> void:
+	spearDamaged = speardmg
+	

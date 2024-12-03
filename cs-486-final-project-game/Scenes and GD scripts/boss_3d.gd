@@ -31,7 +31,7 @@ enum weaponStates {
 var bossState = bossStates.IDLE
 var weaponState = weaponStates.AXE
 @onready var BossAP = $bossRiggedWithWeapons/AnimationPlayer
-
+@onready var rootNode = get_node('/root/Game')
 @onready var nav: NavigationAgent3D = $NavigationAgent3D
 
 @export var Damage = 0
@@ -46,6 +46,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	match bossState:
 		bossStates.IDLE:
+			rootNode.axe_damage_set(true)
 			if (not(BossAP.is_playing())):
 				speed = 3
 				var optionsWeight = [0, 0, 0, 0, 0, 0, 100] # att1, att2, att3, att4, att5, bowshot, do nothing
@@ -107,16 +108,20 @@ func _process(delta: float) -> void:
 				bossState = bossStates.IDLE
 			if (BossAP.current_animation_position >= 3.36 and BossAP.current_animation_position <= 5.0):
 				bossState = bossStates.ATT_1_1
+				Damage = 20
+				rootNode.axe_damage_set(false)
 			if (BossAP.current_animation_position >= 6.0 and BossAP.current_animation_position <= 7.0):
 				bossState = bossStates.ATT_1_1
+				Damage = 20
+				rootNode.axe_damage_set(false)
 		bossStates.ATT_1_1:
-			Damage = 20
 			if (BossAP.current_animation_position >= 5.0):
 				bossState = bossStates.ATT_1_SAFE
+				rootNode.axe_damage_set(true)
 		bossStates.ATT_1_2:
-			Damage = 20
 			if (BossAP.current_animation_position >= 7.0):
 				bossState = bossStates.ATT_1_SAFE
+				rootNode.axe_damage_set(true)
 			if (not(BossAP.is_playing())):
 				bossState = bossStates.IDLE
 		bossStates.ATT_2_SAFE: #0-1, 2-2.7
@@ -125,16 +130,20 @@ func _process(delta: float) -> void:
 				bossState = bossStates.IDLE
 			if (BossAP.current_animation_position >= 0.0 and BossAP.current_animation_position <= 1.0):
 				bossState = bossStates.ATT_2_1
+				Damage = 20
+				rootNode.axe_damage_set(false)
 			if (BossAP.current_animation_position >= 2.0 and BossAP.current_animation_position <= 2.7):
-				bossState = bossStates.ATT_2_1
+				bossState = bossStates.ATT_2_2
+				Damage = 20
+				rootNode.axe_damage_set(false)
 		bossStates.ATT_2_1:
-			Damage = 20
 			if (BossAP.current_animation_position >= 1.0):
 				bossState = bossStates.ATT_2_SAFE
+				rootNode.axe_damage_set(true)
 		bossStates.ATT_2_2:
-			Damage = 20
 			if (BossAP.current_animation_position >= 2.7):
 				bossState = bossStates.ATT_2_SAFE
+				rootNode.axe_damage_set(true)
 			if (not(BossAP.is_playing())):
 				bossState = bossStates.IDLE
 		bossStates.ATT_3_SAFE: #2-2.7 (swing), 3.5 (shrapnel)
@@ -143,14 +152,16 @@ func _process(delta: float) -> void:
 				bossState = bossStates.IDLE
 			if (BossAP.current_animation_position >= 2.0 and BossAP.current_animation_position <= 2.7):
 				bossState = bossStates.ATT_3_1
+				Damage = 50
+				rootNode.axe_damage_set(false)
 			if (BossAP.current_animation_position >= 2.7 and BossAP.current_animation_position <= 3.5):
 				canRotate = false
 			else:
 				canRotate = true
 		bossStates.ATT_3_1:
-			Damage = 50
 			if (BossAP.current_animation_position >= 2.7):
 				bossState = bossStates.ATT_3_SAFE
+				rootNode.axe_damage_set(true)
 			if (not(BossAP.is_playing())):
 				bossState = bossStates.IDLE
 		bossStates.ATT_3_2: #DOES NOTHING FOR NOW
@@ -161,31 +172,62 @@ func _process(delta: float) -> void:
 				bossState = bossStates.IDLE
 			if (BossAP.current_animation_position >= 1.0 and BossAP.current_animation_position <= 1.76):
 				bossState = bossStates.ATT_4_1
+				Damage = 20
+				rootNode.axe_damage_set(false)
 			if (BossAP.current_animation_position >= 2.5 and BossAP.current_animation_position <= 3.6):
 				bossState = bossStates.ATT_4_2
+				Damage = 20
+				rootNode.axe_damage_set(false)
 		bossStates.ATT_4_1:
-			Damage = 20
 			if (BossAP.current_animation_position >= 1.76):
 				bossState = bossStates.ATT_4_SAFE
+				rootNode.axe_damage_set(true)
 			if (not(BossAP.is_playing())):
 				bossState = bossStates.IDLE
 		bossStates.ATT_4_2:
-			Damage = 20
 			if (BossAP.current_animation_position >= 3.6):
 				bossState = bossStates.ATT_4_SAFE
+				rootNode.axe_damage_set(true)
 			if (not(BossAP.is_playing())):
 				bossState = bossStates.IDLE
-		bossStates.ATT_5_SAFE:
-			bossState = bossStates.IDLE
-			pass
+		bossStates.ATT_5_SAFE: #0.6-0.83, 1.03-1.3, 1.5-1.7, 3.8-4.1 (big slam)
+			Damage = 0
+			if (not(BossAP.is_playing())):
+				bossState = bossStates.IDLE
+			if (BossAP.current_animation_position >= 0.6 and BossAP.current_animation_position <= 0.83):
+				bossState = bossStates.ATT_5_1
+				Damage = 10
+				rootNode.axe_damage_set(false)
+			if (BossAP.current_animation_position >= 1.03 and BossAP.current_animation_position <= 1.3):
+				bossState = bossStates.ATT_5_2
+				Damage = 10
+				rootNode.axe_damage_set(false)
+			if (BossAP.current_animation_position >= 1.5 and BossAP.current_animation_position <= 1.75):
+				bossState = bossStates.ATT_5_3
+				Damage = 10
+				rootNode.axe_damage_set(false)
+			if (BossAP.current_animation_position >= 3.8 and BossAP.current_animation_position <= 4.2):
+				bossState = bossStates.ATT_5_4
+				Damage = 50
+				rootNode.axe_damage_set(false)
 		bossStates.ATT_5_1:
-			pass
+			if (BossAP.current_animation_position >= 0.83):
+				bossState = bossStates.ATT_5_SAFE
+				rootNode.axe_damage_set(true)
 		bossStates.ATT_5_2:
-			pass
+			if (BossAP.current_animation_position >= 1.3):
+				bossState = bossStates.ATT_5_SAFE
+				rootNode.axe_damage_set(true)
 		bossStates.ATT_5_3:
-			pass
+			if (BossAP.current_animation_position >= 1.75):
+				bossState = bossStates.ATT_5_SAFE
+				rootNode.axe_damage_set(true)
 		bossStates.ATT_5_4:
-			pass
+			if (BossAP.current_animation_position >= 4.2):
+				bossState = bossStates.ATT_5_SAFE
+				rootNode.axe_damage_set(true)
+			if (not(BossAP.is_playing())):
+				bossState = bossStates.IDLE
 		bossStates.SHOOT:
 			pass
 		bossStates.DEAD:

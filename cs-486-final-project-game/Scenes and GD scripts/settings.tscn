@@ -28,18 +28,8 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="PlayVolume" type="Button" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Volume"
-
-[node name="Other" type="Button" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Other"
-
 [node name="Go Back" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Go Back"
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/PlayVolume" to="." method="_on_play_volume_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Other" to="." method="_on_other_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Go Back" to="." method="_on_go_back_pressed"]

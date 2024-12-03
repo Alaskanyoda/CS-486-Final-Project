@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://b6ifm3vdhr535"]
 
-[ext_resource type="Script" path="res://boss_health_bar.gd" id="1_40rsp"]
+[ext_resource type="Script" path="res://Scenes and GD scripts/boss_health_bar.gd" id="1_40rsp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lp3ar"]
 
@@ -20,13 +20,17 @@ shadow_offset = Vector2(0, 1)
 bg_color = Color(1, 1, 1, 1)
 
 [node name="BossHealthBar" type="ProgressBar"]
-offset_right = 500.0
+z_index = 1
+offset_right = 600.0
 offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_styles/background = SubResource("StyleBoxEmpty_lp3ar")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ewudm")
 value = 60.0
 show_percentage = false
 script = ExtResource("1_40rsp")
+metadata/_edit_use_anchors_ = true
 
 [node name="BossDamageBar" type="ProgressBar" parent="."]
 z_index = -1
@@ -43,5 +47,15 @@ show_percentage = false
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_right = 601.0
+offset_bottom = 23.0
+grow_vertical = 0
+text = "Baller, Lord of State Machines"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

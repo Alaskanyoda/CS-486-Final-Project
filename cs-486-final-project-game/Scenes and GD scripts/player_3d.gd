@@ -18,6 +18,9 @@ enum playerStates {
 
 var state = playerStates.IDLE
 @onready var PlayerAP = $playerRiggedWithWeapons/AnimationPlayer
+@onready var rootNode = get_node('/root/Game')
+@export var Damage = 0
+@export var Blocking = false
 var startTime = Time.get_unix_time_from_system()
 var timeStampBlocking = 0
 
@@ -29,41 +32,55 @@ var input_dir := Vector3(0, 0, 0)
 
 
 func _ready() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	get_tree().call_group("boss", "update_target_location", player.global_transform.origin)
 	match state:
 		playerStates.IDLE:
+			Damage = 0
+			rootNode.spear_damage_set(true)
 			if(Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and not(PlayerAP.is_playing())):
 				if(Input.is_key_pressed(KEY_SHIFT)):
 					state = playerStates.HEAVYATT
+					Damage = 20
+					rootNode.spear_damage_set(false)
 					PlayerAP.queue("heavyattack")
 				else:
 					state = playerStates.ATT_0_1
+					Damage = 5
+					rootNode.spear_damage_set(false)
 					PlayerAP.queue("Swing0-1")
 			if(Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and not(PlayerAP.is_playing())):
 				state = playerStates.BLOCK_START
 				PlayerAP.queue("BlockStart")
 		playerStates.ATT_0_1:
-			if(Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and (PlayerAP.current_animation_position > 0.3)):
+			if(Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and not(PlayerAP.is_playing())):
 				PlayerAP.queue("Swing1-2")
+				Damage = 5
+				rootNode.spear_damage_set(false)
 				state = playerStates.ATT_1_2
 			else:
 				if(not(PlayerAP.is_playing())):
 					PlayerAP.queue("Swing1-end")
+					Damage = 0
+					rootNode.spear_damage_set(true)
 					state = playerStates.ATT_1_END
 		playerStates.ATT_1_END:
 			if(not(PlayerAP.is_playing())):
 				state = playerStates.IDLE
 		playerStates.ATT_1_2:
-			if(Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and (PlayerAP.current_animation_position > 0.3) and (PlayerAP.current_animation == "Swing1-2")):
+			if(Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and not(PlayerAP.is_playing())):
 				PlayerAP.queue("Swing2-3-end")
+				Damage = 7
+				rootNode.spear_damage_set(false)
 				state = playerStates.ATT_2_3_END
 			else:
 				if(not(PlayerAP.is_playing())):
 					PlayerAP.queue("Swing2-end")
+					Damage = 0
+					rootNode.spear_damage_set(true)
 					state = playerStates.ATT_1_END
 		playerStates.ATT_2_END:
 			if(not(PlayerAP.is_playing())):
@@ -71,12 +88,18 @@ func _process(delta: float) -> void:
 		playerStates.ATT_2_3_END:
 			if(not(PlayerAP.is_playing())):
 				state = playerStates.IDLE
+			if (PlayerAP.current_animation_position > 0.0 and PlayerAP.current_animation_position < 1.2):
+				Damage = 7
+			else:
+				Damage = 0
 		playerStates.BLOCK_START:
 			timeStampBlocking = Time.get_unix_time_from_system()
 			state = playerStates.BLOCKING
 		playerStates.BLOCKING:
+			Blocking = true
 			if(not(Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT))):
 				PlayerAP.queue("BlockEnd")
+				Blocking = false
 				state = playerStates.BLOCK_END
 		playerStates.BLOCK_END:
 			if(not(PlayerAP.is_playing())):
@@ -86,6 +109,10 @@ func _process(delta: float) -> void:
 		playerStates.HEAVYATT:
 			if(not(PlayerAP.is_playing())):
 				state = playerStates.IDLE
+			if (PlayerAP.current_animation_position > 2.7 and PlayerAP.current_animation_position < 3.5):
+				Damage = 20
+			else:
+				Damage = 0
 
 
 func _physics_process(delta: float) -> void:

@@ -7,12 +7,14 @@
 radius = 2.0
 
 [node name="boss_3d" type="CharacterBody3D" groups=["boss"]]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_xvny2")
 
 [node name="bossRiggedWithWeapons" parent="." instance=ExtResource("1_nbwtg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="BossCollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("SphereShape3D_3uv1d")
 
