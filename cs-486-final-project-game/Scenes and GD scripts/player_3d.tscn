@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bfklqcvxptp26"]
+[gd_scene load_steps=9 format=3 uid="uid://bfklqcvxptp26"]
 
 [ext_resource type="Script" path="res://Scenes and GD scripts/player_3d.gd" id="1_rexxc"]
 [ext_resource type="Shader" path="res://Shader files/player_3d.gdshader" id="2_mj1x0"]
+[ext_resource type="PackedScene" uid="uid://ctyiouw0a6jdr" path="res://Scenes and GD scripts/player_rigged_with_weapons.tscn" id="2_t3dhq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_disce"]
 render_priority = 0
@@ -17,13 +18,11 @@ shader = ExtResource("2_mj1x0")
 [sub_resource type="BoxMesh" id="BoxMesh_b2764"]
 material = SubResource("ShaderMaterial_lemc3")
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vhki7"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_3oydj"]
+radius = 0.75
 
 [node name="Player3D" type="CharacterBody3D"]
 script = ExtResource("1_rexxc")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_bwyx5")
 
 [node name="CameraNode" type="Node3D" parent="."]
 unique_name_in_owner = true
@@ -32,9 +31,17 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 3.90042, 6.06557)
 
+[node name="playerRiggedWithWeapons" parent="." instance=ExtResource("2_t3dhq")]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("CapsuleMesh_bwyx5")
+
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.8, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.496454, -0.309889)
+visible = false
 mesh = SubResource("BoxMesh_b2764")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CapsuleShape3D_vhki7")
+shape = SubResource("SphereShape3D_3oydj")

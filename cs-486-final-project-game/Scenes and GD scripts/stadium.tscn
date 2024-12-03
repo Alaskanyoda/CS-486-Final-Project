@@ -1,0 +1,340 @@
+[gd_scene load_steps=11 format=3 uid="uid://v31f2mgvypk0"]
+
+[ext_resource type="PackedScene" uid="uid://cetfvngwo1qdu" path="res://GLB files/arch.glb" id="1_bgpwk"]
+[ext_resource type="Texture2D" uid="uid://0ck62um2ke8n" path="res://Shader files/lichen_rock_4k/lichen_rock_diff_4k.png" id="2_i8bb2"]
+[ext_resource type="Texture2D" uid="uid://b6epukh6vu7y7" path="res://Shader files/lichen_rock_4k/lichen_rock_nor_gl_4k.png" id="3_2lmxa"]
+[ext_resource type="Texture2D" uid="uid://dsjh6iieemjdh" path="res://Shader files/lichen_rock_4k/lichen_rock_rough_4k.png" id="4_y7sg0"]
+[ext_resource type="PackedScene" uid="uid://b2f33mccvwp4q" path="res://GLB files/archinnercircle.glb" id="5_kbqiu"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_e5046"]
+radius = 30.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_7ukvw"]
+top_radius = 30.0
+bottom_radius = 30.0
+radial_segments = 32
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0bk65"]
+albedo_texture = ExtResource("2_i8bb2")
+roughness_texture = ExtResource("4_y7sg0")
+normal_enabled = true
+normal_texture = ExtResource("3_2lmxa")
+uv1_scale = Vector3(10, 10, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xoiko"]
+cull_mode = 2
+albedo_color = Color(0.423651, 0.423651, 0.423651, 1)
+metallic = 0.49
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ieh4a"]
+albedo_color = Color(0.77084, 0.770839, 0.770839, 1)
+
+[node name="Stadium" type="Node3D"]
+
+[node name="Floor" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
+shape = SubResource("CylinderShape3D_e5046")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("CylinderMesh_7ukvw")
+surface_material_override/0 = SubResource("StandardMaterial3D_0bk65")
+
+[node name="Archwall" type="Node3D" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Archwall"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Archwall/StaticBody3D"]
+disabled = true
+
+[node name="arch" parent="Archwall" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+
+[node name="Arch" parent="Archwall/arch" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch2" parent="Archwall/arch" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980615, 0, 0.195946, 0, 1, 0, -0.195946, 0, 0.980615, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch/arch2" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch3" parent="Archwall/arch/arch2" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980955, 0, 0.194235, 0, 1, 0, -0.194235, 0, 0.980955, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch/arch2/arch3" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch4" parent="Archwall/arch/arch2/arch3" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980615, 0, 0.195946, 0, 1, 0, -0.195946, 0, 0.980615, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch/arch2/arch3/arch4" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch5" parent="Archwall/arch/arch2/arch3/arch4" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.830984, 0, -0.556296, 0, 1, 0, 0.556296, 0, 0.830984, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch/arch2/arch3/arch4/arch5" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch2" parent="Archwall" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 3, 0)
+
+[node name="Arch" parent="Archwall/arch2" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch2" parent="Archwall/arch2" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980615, 0, 0.195946, 0, 1, 0, -0.195946, 0, 0.980615, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch2/arch2" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch3" parent="Archwall/arch2/arch2" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980955, 0, 0.194235, 0, 1, 0, -0.194235, 0, 0.980955, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch2/arch2/arch3" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch4" parent="Archwall/arch2/arch2/arch3" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980615, 0, 0.195946, 0, 1, 0, -0.195946, 0, 0.980615, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch2/arch2/arch3/arch4" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch5" parent="Archwall/arch2/arch2/arch3/arch4" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.830984, 0, -0.556296, 0, 1, 0, 0.556296, 0, 0.830984, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch2/arch2/arch3/arch4/arch5" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch3" parent="Archwall" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 3, 0)
+
+[node name="Arch" parent="Archwall/arch3" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch2" parent="Archwall/arch3" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980615, 0, 0.195946, 0, 1, 0, -0.195946, 0, 0.980615, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch3/arch2" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch3" parent="Archwall/arch3/arch2" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980955, 0, 0.194235, 0, 1, 0, -0.194235, 0, 0.980955, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch3/arch2/arch3" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch4" parent="Archwall/arch3/arch2/arch3" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980615, 0, 0.195946, 0, 1, 0, -0.195946, 0, 0.980615, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch3/arch2/arch3/arch4" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch5" parent="Archwall/arch3/arch2/arch3/arch4" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.830984, 0, -0.556296, 0, 1, 0, 0.556296, 0, 0.830984, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch3/arch2/arch3/arch4/arch5" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch4" parent="Archwall" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0, 3, 0)
+
+[node name="Arch" parent="Archwall/arch4" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch2" parent="Archwall/arch4" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980615, 0, 0.195946, 0, 1, 0, -0.195946, 0, 0.980615, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch4/arch2" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch3" parent="Archwall/arch4/arch2" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980955, 0, 0.194235, 0, 1, 0, -0.194235, 0, 0.980955, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch4/arch2/arch3" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch4" parent="Archwall/arch4/arch2/arch3" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980615, 0, 0.195946, 0, 1, 0, -0.195946, 0, 0.980615, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch4/arch2/arch3/arch4" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch5" parent="Archwall/arch4/arch2/arch3/arch4" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.830984, 0, -0.556296, 0, 1, 0, 0.556296, 0, 0.830984, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch4/arch2/arch3/arch4/arch5" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch5" parent="Archwall" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 3, 0)
+
+[node name="Arch" parent="Archwall/arch5" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch2" parent="Archwall/arch5" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980615, 0, 0.195946, 0, 1, 0, -0.195946, 0, 0.980615, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch5/arch2" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch3" parent="Archwall/arch5/arch2" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980955, 0, 0.194235, 0, 1, 0, -0.194235, 0, 0.980955, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch5/arch2/arch3" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch4" parent="Archwall/arch5/arch2/arch3" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980615, 0, 0.195946, 0, 1, 0, -0.195946, 0, 0.980615, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch5/arch2/arch3/arch4" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch5" parent="Archwall/arch5/arch2/arch3/arch4" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.830984, 0, -0.556296, 0, 1, 0, 0.556296, 0, 0.830984, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch5/arch2/arch3/arch4/arch5" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch6" parent="Archwall" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 3, 0)
+
+[node name="Arch" parent="Archwall/arch6" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch2" parent="Archwall/arch6" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980615, 0, 0.195946, 0, 1, 0, -0.195946, 0, 0.980615, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch6/arch2" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch3" parent="Archwall/arch6/arch2" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980955, 0, 0.194235, 0, 1, 0, -0.194235, 0, 0.980955, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch6/arch2/arch3" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch4" parent="Archwall/arch6/arch2/arch3" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980615, 0, 0.195946, 0, 1, 0, -0.195946, 0, 0.980615, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch6/arch2/arch3/arch4" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch5" parent="Archwall/arch6/arch2/arch3/arch4" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.830984, 0, -0.556296, 0, 1, 0, 0.556296, 0, 0.830984, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch6/arch2/arch3/arch4/arch5" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch7" parent="Archwall" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0, 3, 0)
+
+[node name="Arch" parent="Archwall/arch7" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch2" parent="Archwall/arch7" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980615, 0, 0.195946, 0, 1, 0, -0.195946, 0, 0.980615, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch7/arch2" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch3" parent="Archwall/arch7/arch2" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980955, 0, 0.194235, 0, 1, 0, -0.194235, 0, 0.980955, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch7/arch2/arch3" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch4" parent="Archwall/arch7/arch2/arch3" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980615, 0, 0.195946, 0, 1, 0, -0.195946, 0, 0.980615, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch7/arch2/arch3/arch4" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch5" parent="Archwall/arch7/arch2/arch3/arch4" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.830984, 0, -0.556296, 0, 1, 0, 0.556296, 0, 0.830984, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch7/arch2/arch3/arch4/arch5" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch8" parent="Archwall" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0, 3, 0)
+
+[node name="Arch" parent="Archwall/arch8" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch2" parent="Archwall/arch8" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980615, 0, 0.195946, 0, 1, 0, -0.195946, 0, 0.980615, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch8/arch2" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch3" parent="Archwall/arch8/arch2" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980955, 0, 0.194235, 0, 1, 0, -0.194235, 0, 0.980955, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch8/arch2/arch3" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch4" parent="Archwall/arch8/arch2/arch3" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.980615, 0, 0.195946, 0, 1, 0, -0.195946, 0, 0.980615, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch8/arch2/arch3/arch4" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="arch5" parent="Archwall/arch8/arch2/arch3/arch4" instance=ExtResource("1_bgpwk")]
+transform = Transform3D(0.830984, 0, -0.556296, 0, 1, 0, 0.556296, 0, 0.830984, 0, 0, 0)
+
+[node name="Arch" parent="Archwall/arch8/arch2/arch3/arch4/arch5" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_xoiko")
+
+[node name="archinnercircle" parent="Archwall" instance=ExtResource("5_kbqiu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+
+[node name="Cylinder" parent="Archwall/archinnercircle" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_ieh4a")
+
+[editable path="Archwall/arch"]
+[editable path="Archwall/arch/arch2"]
+[editable path="Archwall/arch/arch2/arch3"]
+[editable path="Archwall/arch/arch2/arch3/arch4"]
+[editable path="Archwall/arch/arch2/arch3/arch4/arch5"]
+[editable path="Archwall/arch2"]
+[editable path="Archwall/arch2/arch2"]
+[editable path="Archwall/arch2/arch2/arch3"]
+[editable path="Archwall/arch2/arch2/arch3/arch4"]
+[editable path="Archwall/arch2/arch2/arch3/arch4/arch5"]
+[editable path="Archwall/arch3"]
+[editable path="Archwall/arch3/arch2"]
+[editable path="Archwall/arch3/arch2/arch3"]
+[editable path="Archwall/arch3/arch2/arch3/arch4"]
+[editable path="Archwall/arch3/arch2/arch3/arch4/arch5"]
+[editable path="Archwall/arch4"]
+[editable path="Archwall/arch4/arch2"]
+[editable path="Archwall/arch4/arch2/arch3"]
+[editable path="Archwall/arch4/arch2/arch3/arch4"]
+[editable path="Archwall/arch4/arch2/arch3/arch4/arch5"]
+[editable path="Archwall/arch5"]
+[editable path="Archwall/arch5/arch2"]
+[editable path="Archwall/arch5/arch2/arch3"]
+[editable path="Archwall/arch5/arch2/arch3/arch4"]
+[editable path="Archwall/arch5/arch2/arch3/arch4/arch5"]
+[editable path="Archwall/arch6"]
+[editable path="Archwall/arch6/arch2"]
+[editable path="Archwall/arch6/arch2/arch3"]
+[editable path="Archwall/arch6/arch2/arch3/arch4"]
+[editable path="Archwall/arch6/arch2/arch3/arch4/arch5"]
+[editable path="Archwall/arch7"]
+[editable path="Archwall/arch7/arch2"]
+[editable path="Archwall/arch7/arch2/arch3"]
+[editable path="Archwall/arch7/arch2/arch3/arch4"]
+[editable path="Archwall/arch7/arch2/arch3/arch4/arch5"]
+[editable path="Archwall/arch8"]
+[editable path="Archwall/arch8/arch2"]
+[editable path="Archwall/arch8/arch2/arch3"]
+[editable path="Archwall/arch8/arch2/arch3/arch4"]
+[editable path="Archwall/arch8/arch2/arch3/arch4/arch5"]
+[editable path="Archwall/archinnercircle"]
