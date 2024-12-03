@@ -109,7 +109,9 @@ func _process(delta: float) -> void:
 		playerStates.HEAVYATT:
 			if(not(PlayerAP.is_playing())):
 				state = playerStates.IDLE
-			if (PlayerAP.current_animation_position > 2.7 and PlayerAP.current_animation_position < 3.5):
+			if (PlayerAP.current_animation_position <= 2.6):
+				rootNode.spear_damage_set(false)
+			if (PlayerAP.current_animation_position >= 2.6 and PlayerAP.current_animation_position < 3.6):
 				Damage = 20
 			else:
 				Damage = 0

@@ -30,7 +30,7 @@ bones/11/position = Vector3(1.99886, -0.00206626, -2.52099)
 surface_material_override/0 = SubResource("StandardMaterial3D_8e80v")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="1"]
-transform = Transform3D(0.291499, -6.33299e-07, 0.956571, -0.956571, 2.98023e-07, 0.291499, -4.47035e-07, -1, -5.01983e-07, 1.99886, -0.00206596, -2.52099)
+transform = Transform3D(0.291499, 2.5332e-07, 0.956571, -0.956571, -2.98023e-08, 0.291499, 1.49012e-07, -1, 2.52388e-07, 1.99886, -0.00206888, -2.52099)
 bone_name = "Bone_R.Hand"
 bone_idx = 8
 
